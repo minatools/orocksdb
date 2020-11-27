@@ -27,10 +27,12 @@ module type ITERATOR = sig
   val prev : t -> unit
 
   val get_key_string : t -> string
+
   (** returned buffer is only valid as long as [t] is not modified *)
   val get_key : t -> bigarray
 
   val get_value_string : t -> string
+
   (** returned buffer is only valid as long as [t] is not modified *)
   val get_value : t -> bigarray
 
@@ -108,6 +110,6 @@ module type ROCKS = sig
   val create_snapshot : t -> Snapshot.t
   val release_snapshot : t -> Snapshot.t -> unit
 
-  val checkpoint_create : t -> string -> int -> unit
+  val checkpoint_create :  t -> ?log_size_for_flush:int -> dir:string -> unit
   val property_value : t -> string -> string option
 end
