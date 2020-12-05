@@ -47,5 +47,5 @@ load("@rules_foreign_cc//:workspace_definitions.bzl", "rules_foreign_cc_dependen
 rules_foreign_cc_dependencies()
 
 ################ Fetch librocksdb ################
-load("//:BUILD.bzl", "librocksdb_fetch_repos")
+load("//:WORKSPACE.bzl", "librocksdb_fetch_repos")
 librocksdb_fetch_repos()
