@@ -33,7 +33,7 @@ ocaml_archive(
         ":_Rocks_common",
         ":_Rocks_intf",
         ":_Rocks_options",
-        ":_Rocks_version",
+        # ":_Rocks_version",
     ],
     cc_deps = {
         # "@//bzl/external/bzip2": "static",    # -lbz2
@@ -60,7 +60,7 @@ ocaml_ns(
         "rocks_common.ml",
         "rocks_intf.ml",
         "rocks_options.ml",
-        "rocks_version.ml",
+        # "rocks_version.ml",
     ],
 )
 
@@ -85,7 +85,7 @@ ocaml_module(
         ":_Rocks_common",
         ":_Rocks_intf",
         ":_Rocks_options",
-        ":_Rocks_version",
+        # ":_Rocks_version",
     ],
 )
 
@@ -100,7 +100,7 @@ ocaml_interface(
         ":_Rocks_common",
         ":_Rocks_intf",
         ":_Rocks_options",
-        ":_Rocks_version",
+        # ":_Rocks_version",
     ],
 )
 
@@ -141,16 +141,16 @@ ocaml_module(
 )
 
 #############
-ocaml_module(
-    name = "_Rocks_version",
-    src = "rocks_version.ml",
-    ns = ":Rocks_ns",
-    opts = ROCKS_MODULE_OPTS,
-    deps = ROCKS_DEPS + [
-        # do not sort (buildifier)
-        # ":_Rocks_common",
-    ],
-)
+# ocaml_module(
+#     name = "_Rocks_version",
+#     src = "rocks_version.ml",
+#     ns = ":Rocks_ns",
+#     opts = ROCKS_MODULE_OPTS,
+#     deps = ROCKS_DEPS + [
+#         # do not sort (buildifier)
+#         # ":_Rocks_common",
+#     ],
+# )
 
 ################################################################
 # TODO: number of jobs for Linux, Darwin
