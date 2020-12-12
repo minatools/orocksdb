@@ -175,6 +175,10 @@ ENV_VARS = " ".join([
     "PREFIX=${INSTALLDIR}", # v6.14.5
 ])
 
+VERSION_MAJOR = "5"
+VERSION_MINOR = "17"
+VERSION_PATCH = "2"
+
 make(
     name = "librocksdb",
     lib_source = "@rocksdb//:all", # mandatory
@@ -185,21 +189,29 @@ make(
     shared_libraries = select({
         "//bzl/host:macos": [
             "librocksdb.dylib",
-
-            "librocksdb.5.dylib",
-            "librocksdb.5.17.dylib",
-             "librocksdb.5.17.2.dylib",
-
-            # "librocksdb.6.0.dylib",
-            # "librocksdb.6.0.1.dylib"
-
-            # "librocksdb.6.dylib",
-            # "librocksdb.6.14.dylib",
-            # "librocksdb.6.14.5.dylib"
+            "librocksdb.{major}.dylib".format(
+                major=VERSION_MAJOR
+            ),
+            "librocksdb.{major}.{minor}.dylib".format(
+                major=VERSION_MAJOR, minor=VERSION_MINOR
+            ),
+             "librocksdb.{major}.{minor}.{patch}.dylib".format(
+                 major=VERSION_MAJOR, minor=VERSION_MINOR, patch=VERSION_PATCH
+             ),
         ],
-        "//bzl/host:linux": ["librocksdb.so"],
-        # "//conditions:default": [],
-    }),
+        "//bzl/host:linux": [
+            "librocksdb.so",
+            "librocksdb.so.{major}".format(
+                major=VERSION_MAJOR
+            ),
+            "librocksdb.so.{major}.{minor}".format(
+                major=VERSION_MAJOR, minor=VERSION_MINOR
+            ),
+             "librocksdb.so.{major}.{minor}.{patch}".format(
+                 major=VERSION_MAJOR, minor=VERSION_MINOR, patch=VERSION_PATCH
+             ),
+        ]
+    }, no_match_error = "Unsupported platform. MacOS or Linux only."),
     make_env_vars = {
         "PREFIX": "${INSTALLDIR}",
         "VERBOSE": "1"
@@ -210,14 +222,11 @@ make(
             "make",
             # "install", ## both static and shared
             "install-shared",
-            # "install-static",
             "-j2",
         ]) + " " + ENV_VARS,
         " ".join([
             # "INSTALL_PATH=${INSTALLDIR}", # v6.0.1
             "make",
-            # "install", ## both static and shared
-            # "install-shared",
             "install-static",
             "-j2",
         ]) + " " + ENV_VARS,
