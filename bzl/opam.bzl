@@ -1,7 +1,6 @@
 PACKAGES = {
     "ctypes": ["0.17.1", ["ctypes.foreign"]],
-    "ctypes-foreign": ["0.4.0"],
-    # "ctypes-foreign.threaded"]],
+    "ctypes-foreign": ["0.4.0"], # WARNING: requires libffi-dev
 }
 
 opam = struct(
