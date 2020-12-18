@@ -141,6 +141,7 @@ ocaml_module(
 )
 
 #############
+## this is added in a more recent version of the lib
 # ocaml_module(
 #     name = "_Rocks_version",
 #     src = "rocks_version.ml",

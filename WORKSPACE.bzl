@@ -34,7 +34,7 @@ def librocksdb_fetch_repos():
             "srcs = glob([\"**\"]),",
             "visibility = [\"//visibility:public\"])",
         ]),
-        workspace_file_content = "workspace( name = \"mina_rocksdb\" )"
+        workspace_file_content = "workspace( name = \"rocksdb\" )"
     )
 
     maybe(

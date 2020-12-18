@@ -1,4 +1,4 @@
 {
- :workspace "ocaml-jemalloc"
+ :workspace "ocaml_rocksdb"
  :ppx {:shared-pkg "//bzl/ppx/exe"}
  }
