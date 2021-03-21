@@ -9,9 +9,6 @@ load(
     "ocaml_ns_archive",
 )
 
-# load("@obazl_rules_ocaml//ocaml:macros.bzl", "ns_env")
-# ns_env( aliases = glob(["*.ml"]) )
-
 ################################################################
 ## STANZA 1: LIBRARY ROCKS
 ################################################################
@@ -26,12 +23,23 @@ ROCKS_OPAM_DEPS = [
     "ctypes.foreign",
 ]
 
+#################
+ocaml_ns_archive(
+    name = "rocks",
+    submodules = [
+        ":_Rocks",
+        ":_Rocks_common",
+        ":_Rocks_intf",
+        ":_Rocks_options"
+    ],
+    visibility = ["//visibility:public"]
+)
+
 #############
 ocaml_module(
-    name = "rocks",
+    name = "_Rocks",
     struct = "rocks.ml",
     sig  = ":_Rocks.cmi",
-    # ns_env = ":_ns_env",
     opts = ROCKS_MODULE_OPTS + [
         "-w", "-6", # Error (warning 6): label length was omitted in the application of this function.
         "-w", "-27", # Error (warning 27): unused variable opts.
@@ -57,21 +65,19 @@ ocaml_module(
         ":zlib": "static-linkall", # "default",
         ":librocksdb": "static-linkall"
     },
-    visibility = ["//visibility:public"]
 )
 
 #####
 ocaml_signature(
     name   = "_Rocks.cmi",
     src    = "rocks.mli",
-    # ns_env = ":_ns_env",
     opts = ROCKS_SIGNATURE_OPTS,
     deps_opam = ROCKS_OPAM_DEPS,
 	deps = [
         # do not sort (buildifier)
         ":_Rocks_common",
         ":_Rocks_intf",
-        ":_Rocks_options",
+        # ":_Rocks_options",
         # ":_Rocks_version",
     ],
 )
@@ -80,7 +86,6 @@ ocaml_signature(
 ocaml_module(
     name      = "_Rocks_common",
     struct    = "rocks_common.ml",
-    # ns_env    = ":_ns_env",
     opts      = ROCKS_MODULE_OPTS,
     deps_opam = ROCKS_OPAM_DEPS,
 )
@@ -89,7 +94,6 @@ ocaml_module(
 ocaml_module(
     name = "_Rocks_intf",
     struct = "rocks_intf.ml",
-    # ns_env = ":_ns_env",
     opts = ROCKS_MODULE_OPTS + [
         "-w",
         "-50" # Error (warning 50): ambiguous documentation comment
@@ -104,7 +108,6 @@ ocaml_module(
 ocaml_module(
     name = "_Rocks_options",
     struct = "rocks_options.ml",
-    # ns_env = ":_ns_env",
     opts = ROCKS_MODULE_OPTS,
     deps_opam = ROCKS_OPAM_DEPS,
 	deps = [
@@ -117,7 +120,6 @@ ocaml_module(
 # ocaml_module(
 #     name = "_Rocks_version",
 #     struct = "rocks_version.ml",
-#     # ns_env = ":rocks_ns",
 #     opts = ROCKS_MODULE_OPTS,
 #     deps_opam = ROCKS_OPAM_DEPS,
 #     deps = [
